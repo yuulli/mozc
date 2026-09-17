@@ -45,7 +45,11 @@ jobs:
       - name: bazel build
         working-directory: ./src
         run: |
-          bazelisk build package --macos_cpus=arm64 --config release_build
+          bazelisk build \
+          package \
+          //unix/emacs:mozc_emacs_helper \
+          --macos_cpus=arm64 \
+          --config release_build
 
       - name: upload artifacts
         uses: actions/upload-artifact@v7
@@ -53,6 +57,15 @@ jobs:
           name: Mozc_arm64.pkg
           path: src/bazel-bin/mac/Mozc.pkg
           if-no-files-found: warn
+
+      - name: upload Emacs helper
+        uses: actions/upload-artifact@v7
+        with:
+          name: mozc-emacs-helper-arm64
+          path: |
+            src/bazel-bin/unix/emacs/mozc_emacs_helper
+            src/unix/emacs/mozc.el
+          if-no-files-found: error
 
   build_intel64:
     # https://github.com/actions/runner-images/blob/main/images/macos/macos-26-arm64-Readme.md
