@@ -58,7 +58,7 @@ jobs:
           path: src/bazel-bin/mac/Mozc.pkg
           if-no-files-found: warn
 
-      - name: upload Emacs helper
+      - name: upload Emacs helper program
         uses: actions/upload-artifact@v7
         with:
           name: mozc-emacs-helper-arm64
